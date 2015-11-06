@@ -16,5 +16,8 @@
             "Nicklaw5\\Larapi\\": "src/"
         }
     },
+    "config":{
+        "cache-files-ttl": 0
+    },
     "minimum-stability": "stable"
 }

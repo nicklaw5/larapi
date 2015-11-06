@@ -1,0 +1,20 @@
+{
+    "name": "nicklaw5/larapi",
+    "description": "A simple Laravel 5 class for handling json api responses.",
+    "keywords": ["framework", "laravel", "json", "api"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Nicholas Law",
+        }
+    ],
+    "require": {
+        "php": ">=5.5.9",
+    },
+    "autoload": {
+        "psr-0": {
+            "Nicklaw5\\Larapi\\": "src/"
+        }
+    },
+    "minimum-stability": "dev"
+}

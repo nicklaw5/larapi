@@ -16,5 +16,5 @@
             "Nicklaw5\\Larapi\\": "src/"
         }
     },
-    "minimum-stability": "1.0"
+    "minimum-stability": "dev"
 }

@@ -12,8 +12,8 @@
         "php": ">=5.5.9"
     },
     "autoload": {
-        "psr-0": {
-            "Nicklaw5\\Larapi\\": "src/"
+        "psr-4": {
+            "Larapi\\": "src/"
         }
     },
     "config":{

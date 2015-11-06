@@ -1,10 +1,10 @@
 <?php 
 
-namespace Nicklaw5\Larapi\Providers;
+namespace Nicklaw5\Larapi;
 
 use Illuminate\Support\ServiceProvider;
 
-class ApiServiceProvider extends ServiceProvider {
+class LarapiServiceProvider extends ServiceProvider {
 
 	/**
 	 * Indicates if loading of the provider is deferred.

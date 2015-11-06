@@ -1,6 +1,6 @@
 <?php
 
-namespace Nicklaw5\Larapi;
+namespace Larapi;
 
 class Larapi {
 

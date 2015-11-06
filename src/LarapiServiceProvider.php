@@ -1,6 +1,6 @@
 <?php 
 
-namespace Nicklaw5\Larapi;
+namespace Larapi;
 
 use Illuminate\Support\ServiceProvider;
 
@@ -35,7 +35,7 @@ class LarapiServiceProvider extends ServiceProvider {
 		});
 		$this->app->booting(function(){
 			$loader = \Illuminate\Foundation\AliasLoader::getInstance();
-			$loader->alias('Larapi', 'Nicklaw5\Larapi\Facades\Larapi');
+			$loader->alias('Larapi', 'Larapi\Facades\Larapi');
 		});
 	}
 

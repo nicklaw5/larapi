@@ -1,6 +1,6 @@
 <?php 
 
-namespace Nicklaw5\Larapi\Facades;
+namespace Larapi\Facades;
 
 use Illuminate\Support\Facades\Facade;
 

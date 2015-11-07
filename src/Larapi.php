@@ -28,7 +28,7 @@ class Larapi {
 
     // OTHER CONSTANTS
     const ERROR_TEXT = 'error';
-    const SUCCESS_TEXT = 'succes';
+    const SUCCESS_TEXT = 'success';
     const UNKNOWN_ERROR = 'An unknown error occured';
 
     /**

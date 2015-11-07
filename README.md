@@ -1,9 +1,9 @@
 Larapi
 ======
-A simple Laravel 5 class for handling common HTTP json API responses.
+A simple Laravel 5 package for handling common HTTP API responses in JSON form.
 
 # Installation
-To install the package, simply add the following to your Laravel installation's `composer.json` file
+To install the package, simply add the following to your Laravel installation's `composer.json` file:
 
 ```json
 "require": {
@@ -12,7 +12,7 @@ To install the package, simply add the following to your Laravel installation's 
 },
 ```
 
-Run `composer update` to pull the files.  Then, add the following **Service Provider** to your `providers` array in your `config/app.php` config.
+Run `composer update` to pull the files.  Then, add the following **Service Provider** to your `providers` array in your `config/app.php` config:
 
 ```php
 'providers' => array(
@@ -24,9 +24,11 @@ Run `composer update` to pull the files.  Then, add the following **Service Prov
 # Usage
 ###Succes Responses###
 Available responses:
-```Larapi::respondOk()```			// 200 HTTP Response
-```Larapi::respondCreated()```		// 201 HTTP Response
-```Larapi::respondAccepted()```		// 202 HTTP Response
+```php
+Larapi::respondOk();			// 200 HTTP Response
+Larapi::respondCreated();		// 201 HTTP Response
+Larapi::respondAccepted();		// 202 HTTP Response
+```
 
 **Example: Return HTTP OK**
 ```php
@@ -37,6 +39,7 @@ Route::get('/', function()
 	return Larapi::respondOk();
 });
 ```
+
 Will return:
 ```json
 {
@@ -67,6 +70,7 @@ Route::get('/', function()
 	]);
 });
 ```
+
 Will return:
 ```json
 {
@@ -90,14 +94,16 @@ Will return:
 ###Error Responses###
 
 Available responses:
-```Larapi::respondBadRequest()```			// 400 HTTP Response
-```Larapi::respondUnauthorized()```			// 401 HTTP Response
-```Larapi::respondForbidden()``` 			// 403 HTTP Response
-```Larapi::respondNotFound()``` 			// 404 HTTP Response
-```Larapi::respondMethodNotAllowed()``` 	// 405 HTTP Response
-```Larapi::respondInternalError()``` 		// 500 HTTP Response
-```Larapi::respondNotImplemented()``` 		// 501 HTTP Response
-```Larapi::respondNotAvailable()``` 		// 503 HTTP Response
+```php
+Larapi::respondBadRequest();		// 400 HTTP Response
+Larapi::respondUnauthorized();		// 401 HTTP Response
+Larapi::respondForbidden(); 		// 403 HTTP Response
+Larapi::respondNotFound(); 			// 404 HTTP Response
+Larapi::respondMethodNotAllowed(); 	// 405 HTTP Response
+Larapi::respondInternalError();		// 500 HTTP Response
+Larapi::respondNotImplemented(); 	// 501 HTTP Response
+Larapi::respondNotAvailable(); 		// 503 HTTP Response
+```
 
 
 **Example: Return HTTP Bad Request**
@@ -108,6 +114,7 @@ Route::get('/', function()
 {
 	return Larapi::respondBadRequest();
 });
+```
 
 Will return:
 ```json
@@ -126,6 +133,7 @@ Route::get('/', function()
 {
 	return Larapi::respondBadRequest('Invalid email address.', 4001);
 });
+```
 
 Will return:
 ```json
@@ -139,3 +147,12 @@ Will return:
 	}
 }
 ```
+
+###Header Responses###
+The HTTP response headers are also automatically assigned to the response. For example, calling ```Larapi::respondNotFound();``` will add the below to the response header:
+```json
+HTTP/1.1 404 Not Found
+```
+
+# Need More?
+I have left this package rather basic, as my needs do not currenlty exceed what it currenlty provides. If there is anyone that would like to see this package extented, please let me know your ideas. Or, simply extend it yourself :)

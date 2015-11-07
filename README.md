@@ -58,12 +58,12 @@ Route::get('/', function()
 {
 	return Larapi::respondOk([
 		[
-			'user_id' 	=> 	1,
+			'id' 		=> 	1,
 			'name'		=>	'John Doe',
 			'email'		=>	'john@doe.com'
 		],
 		[
-			'user_id' 	=> 	2,
+			'id' 		=> 	2,
 			'name'		=>	'Jane Doe',
 			'email'		=>	'jane@doe.com'
 		]

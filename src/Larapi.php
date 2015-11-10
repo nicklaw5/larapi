@@ -78,7 +78,12 @@ class Larapi {
     /**
      * @var int
      */
-    protected $errorCode = 0;
+    protected $errorCode = null;
+
+    /**
+     * @var array
+     */
+    protected $headers = [];
 
     /**
      * Instantiate a new class instance
@@ -207,31 +212,68 @@ class Larapi {
      */
     public function setErrorCode($code)
     {
-        $this->errorCode = (int) $code;
+        if($code !== null)
+            $this->errorCode = (int) $code;
 
         return $this;
+    }
+
+    /**
+     * Gets the response headers
+     * 
+     * @return array 
+     */
+    protected function getResponseHeaders()
+    {
+        return $this->headers;
+    }
+
+    /**
+     * Sets the response headers
+     * 
+     * @param array $headers
+     * @return void 
+     */
+    protected function setResponseHeaders(array $headers)
+    {
+        // reset headers
+        $this->headers = [];
+
+        // set user supplied headers
+        foreach ($headers as $key => $value)
+        {
+            $this->headers[$key] = $value;
+        }
+
+        // set response status header
+        $this->headers[] = 'HTTP/1.1 ' . $this->getStatusCode() . ' ' . $this->getStatusText();
+
+        // set content type header
+        $this->headers['Content-Type'] = 'application/json';
     }
 
     /**
      * Returns 200 OK Response
      * 
      * @param  array $data
+     * @param array $headers
      * @return json
      */
-    public function respondOk($data = [])
+    public function respondOk($data = [], $headers = [])
     {
-        return $this->getSuccessResponse($data, self::HTTP_OK);
+        return $this->getSuccessResponse($data, self::HTTP_OK, $headers);
     }
 
     /**
      * Returns 201 Created Response
      * 
      * @param  array $data
+     * @param array $headers
      * @return json
      */
-    public function respondCreated($data = [])
+    public function respondCreated($data = [], $headers = [])
     {
-        return $this->getSuccessResponse($data, self::HTTP_CREATED);
+        return $this->getSuccessResponse($data, self::HTTP_CREATED, $headers);
     }
 
     /**
@@ -239,35 +281,38 @@ class Larapi {
      * 
      * @param  array $data
      * @param  string $msg
+     * @param array $headers
      * @return Response
      */
-    public function respondAccepted($data = [])
+    public function respondAccepted($data = [], $headers = [])
     {
-        return $this->getSuccessResponse($data, self::HTTP_ACCEPTED);
+        return $this->getSuccessResponse($data, self::HTTP_ACCEPTED, $headers);
     }
 
     /**
      * Returns 400 Bad Request Response
      * 
      * @param  string $msg
-     * @param int $errorCode
+     * @param  int $errorCode
+     * @param array $headers
      * @return json
      */
-    public function respondBadRequest($msg = '', $errorCode = 0)
+    public function respondBadRequest($msg = '', $errorCode = null, $headers = [])
     {
-        return $this->getErrorResponse($msg, $errorCode, self::HTTP_BAD_REQUEST);
+        return $this->getErrorResponse($msg, $errorCode, self::HTTP_BAD_REQUEST, $headers);
     }
 
     /**
      * Returns 401 Unauthorized Response
      * 
-     * @param string $msg
-     * @param int $errorCode
+     * @param  string $msg
+     * @param  int $errorCode
+     * @param array $headers
      * @return json
      */
-    public function respondUnauthorized($msg = '', $errorCode = 0)
+    public function respondUnauthorized($msg = '', $errorCode = null, $headers = [])
     {
-        return $this->getErrorResponse($msg, $errorCode, self::HTTP_UNAUTHORIZED);
+        return $this->getErrorResponse($msg, $errorCode, self::HTTP_UNAUTHORIZED, $headers);
     }
 
     /**
@@ -275,11 +320,12 @@ class Larapi {
      * 
      * @param string $msg
      * @param int $errorCode
+     * @param array $headers
      * @return json
      */
-    public function respondForbidden($msg = '', $errorCode = 0)
+    public function respondForbidden($msg = '', $errorCode = null, $headers = [])
     {
-        return $this->getErrorResponse($msg, $errorCode, self::HTTP_FORBIDDEN);
+        return $this->getErrorResponse($msg, $errorCode, self::HTTP_FORBIDDEN, $headers);
     }
 
     /**
@@ -287,11 +333,12 @@ class Larapi {
      *
      * @param string $msg
      * @param int $errorCode
+     * @param array $headers
      * @return json
      */
-    public function respondNotFound($msg = '', $errorCode = 0)
+    public function respondNotFound($msg = '', $errorCode = null, $headers = [])
     {
-        return $this->getErrorResponse($msg, $errorCode, self::HTTP_NOT_FOUND);
+        return $this->getErrorResponse($msg, $errorCode, self::HTTP_NOT_FOUND, $headers);
     }
 
     /**
@@ -299,11 +346,12 @@ class Larapi {
      *
      * @param string $msg
      * @param int $errorCode
+     * @param array $headers
      * @return json
      */
-    public function respondMethodNotAllowed($msg = '', $errorCode = 0)
+    public function respondMethodNotAllowed($msg = '', $errorCode = null, $headers = [])
     {
-        return $this->getErrorResponse($msg, $errorCode, self::HTTP_METHOD_NOT_ALLOWED);        
+        return $this->getErrorResponse($msg, $errorCode, self::HTTP_METHOD_NOT_ALLOWED, $headers);        
     }
 
     /**
@@ -311,11 +359,12 @@ class Larapi {
      *
      * @param string $msg
      * @param int $errorCode
+     * @param array $headers
      * @return json
      */
-    public function respondInternalError($msg = '', $errorCode = 0)
+    public function respondInternalError($msg = '', $errorCode = null, $headers = [])
     {
-        return $this->getErrorResponse($msg, $errorCode, self::HTTP_INTERNAL_SERVER_ERROR);
+        return $this->getErrorResponse($msg, $errorCode, self::HTTP_INTERNAL_SERVER_ERROR, $headers);
     }
 
     /**
@@ -323,23 +372,12 @@ class Larapi {
      *
      * @param string $msg
      * @param int $errorCode
+     * @param array $headers
      * @return json
      */
-    public function respondNotImplemented($msg = '', $errorCode = 0)
+    public function respondNotImplemented($msg = '', $errorCode = null, $headers = [])
     {
-        return $this->getErrorResponse($msg, $errorCode, self::HTTP_NOT_IMPLEMENTED);
-    }
-
-    /**
-     * Returns 503 Rate Limit Exceeded HTTP Response
-     *      
-     * @param string $msg
-     * @param int $errorCode
-     * @return json
-     */
-    public function respondRateLimitExceeded($msg = '', $errorCode = 0)
-    {
-        return $this->getErrorResponse($msg, $errorCode, self::HTTP_SERVICE_UNAVAILABLE);
+        return $this->getErrorResponse($msg, $errorCode, self::HTTP_NOT_IMPLEMENTED, $headers);
     }
 
     /**
@@ -347,72 +385,92 @@ class Larapi {
      *
      * @param string $msg
      * @param int $errorCode
+     * @param array $headers
      * @return json
      */
-    public function respondNotAvailable($msg = '', $errorCode = 0)
+    public function respondNotAvailable($msg = '', $errorCode = null, $headers = [])
     {
-        return $this->getErrorResponse($msg, $errorCode, self::HTTP_SERVICE_UNAVAILABLE);
+        return $this->getErrorResponse($msg, $errorCode, self::HTTP_SERVICE_UNAVAILABLE, $headers);
     }
 
     /**
-     * Sets the success response
+     * Gets the success response
      *
+     * @param array $data
+     * @param string $statusText
+     * @param array $headers
      * @return json 
      */
-    protected function getSuccessResponse($data, $statusText)
+    protected function getSuccessResponse($data, $statusText, $headers = [])
     {
         return $this->setStatusText($this->statusTexts[$statusText])
                     ->setStatusCode($statusText)
                     ->setStatusMessage(self::SUCCESS_TEXT)
-                    ->respondWithSuccessMessage($data);
+                    ->respondWithSuccessMessage($data, $headers);
     }
 
     /**
-     * Sets the error response
+     * Gets the error response
      *
+     * @param string $msg
+     * @param int $errorCode
+     * @param string $statusText
+     * @param array $headers
      * @return json 
      */
-    protected function getErrorResponse($msg, $errorCode, $statusText)
+    protected function getErrorResponse($msg, $errorCode, $statusText, $headers = [])
     {
         return $this->setStatusText($this->statusTexts[$statusText])
                     ->setStatusCode($statusText)
                     ->setStatusMessage(self::ERROR_TEXT)
                     ->setErrorCode($errorCode)
                     ->setErrorMessage($msg)
-                    ->respondWithErrorMessage();
+                    ->respondWithErrorMessage($headers);
     }
 
     /**
      * Returns JSON Encoded Response based on the set HTTP Status Code
      * 
-     * @param  string $msg
      * @param  array $data
-     * @return Response
-     */
-    protected function respondWithSuccessMessage($data)
-    {
-        return $this->respond([
-            'code'      => $this->getStatusCode(),
-            'status'    => $this->getStatusText(),
-            'message'   => $this->getStatusMessage(),
-            'response'  => $data
-        ]);
-    }
-
-    /**
-     * Returns JSON Encoded Response based on the set HTTP Status Code
-     * 
+     * @param  array $headers
      * @return json
      */
-    protected function respondWithErrorMessage()
+    protected function respondWithSuccessMessage($data = [], $headers = [])
     {
-        if($this->getErrorCode() === 0)
+        if(empty($data))
+        {
+            return $this->respond([
+                'code'      => $this->getStatusCode(),
+                'status'    => $this->getStatusText(),
+                'message'   => $this->getStatusMessage(),
+            ], $headers);
+        }
+        else
+        {
+            return $this->respond([
+                'code'      => $this->getStatusCode(),
+                'status'    => $this->getStatusText(),
+                'message'   => $this->getStatusMessage(),
+                'response'  => $data
+            ], $headers);
+        }
+    }
+
+    /**
+     * Returns JSON Encoded Response based on the set HTTP Status Code
+     * 
+     * @param array $headers
+     * @return json
+     */
+    protected function respondWithErrorMessage($headers = [])
+    {
+        if($this->getErrorCode() === null)
         {
             return $this->respond([
                 'code'      => $this->getStatusCode(),
                 'status'    => $this->getStatusText(),
                 'message'   => $this->getStatusMessage()
-            ]);
+            ], $headers);
         }
         else
         {
@@ -424,7 +482,7 @@ class Larapi {
                     'error-code'    => $this->getErrorCode(),
                     'error-message' => $this->getErrorMessage()
                 ]
-            ]);
+            ], $headers);
         }
     }
 
@@ -437,8 +495,9 @@ class Larapi {
      */
     protected function respond($body, $headers = [])
     {
-        $headers[] = 'HTTP/1.1 ' . $this->getStatusCode() . ' ' . $this->getStatusText();
-        return response()->json($body, $this->getStatusCode(), $headers);
+        $this->setResponseHeaders($headers);
+
+        return response()->json($body, $this->getStatusCode(), $this->getResponseHeaders());
     }
 
 }

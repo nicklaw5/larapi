@@ -1,7 +1,7 @@
 {
     "name": "nicklaw5/larapi",
     "description": "A simple Laravel 5 class for handling json api responses.",
-    "keywords": ["framework", "laravel", "json", "api"],
+    "keywords": ["laravel", "json", "api", "response"],
     "license": "MIT",
     "authors": [
         {
@@ -16,8 +16,5 @@
             "Larapi\\": "src/"
         }
     },
-    "config":{
-        "cache-files-ttl": 0
-    },
-    "minimum-stability": "stable"
+    "minimum-stability": "dev"
 }

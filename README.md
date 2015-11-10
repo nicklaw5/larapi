@@ -8,11 +8,11 @@ To install the package, simply add the following to your Laravel installation's 
 ```json
 "require": {
 	"laravel/framework": "5.*",
-	"nicklaw5/larapi": "1.1.*"
+	"nicklaw5/larapi": "1.2.*"
 },
 ```
 
-Run `composer update` to pull the files.  Then, add the following **Service Provider** to your `providers` array in your `config/app.php` config:
+Run `composer update` to pull in the files. Then, add the following **Service Provider** to your `providers` array in your `config/app.php` file:
 
 ```php
 'providers' => array(
@@ -31,6 +31,7 @@ Larapi::respondAccepted();		// 202 HTTP Response
 ```
 
 **Example: Return HTTP OK**
+This:
 ```php
 // app/Http/routes.php
 
@@ -40,38 +41,37 @@ Route::get('/', function()
 });
 ```
 
-Will return:
+will return:
 ```json
 {
 	"code":200,
 	"status":"OK",
-	"message":"success",
-	"response":[]
+	"message":"success"
 }
 ```
+with these headers:
+```text
+HTTP/1.1 200 OK
+Content-Type: application/json
+```
 
-**Example:  Return HTTP OK with Response Data**
+**Example: Return HTTP OK with Response Data**
+This:
 ```php
 // app/Http/routes.php
 
 Route::get('/', function()
 {
-	return Larapi::respondOk([
-		[
-			'id' 		=> 	1,
-			'name'		=>	'John Doe',
-			'email'		=>	'john@doe.com'
-		],
-		[
-			'id' 		=> 	2,
-			'name'		=>	'Jane Doe',
-			'email'		=>	'jane@doe.com'
-		]
-	]);
+	$data = [
+		['id' => 1, 'name' => 'John Doe', 'email' => 'john@doe.com'],
+		['id' => 2, 'name' => 'Jane Doe', 'email' => 'jane@doe.com']
+	];
+
+	return Larapi::respondOk($data);
 });
 ```
 
-Will return:
+will return:
 ```json
 {
 	"code":200,
@@ -91,6 +91,60 @@ Will return:
 	]
 }
 ```
+with these headers:
+```text
+HTTP/1.1 200 OK
+Content-Type: application/json
+```
+
+**Example: Return HTTP OK with Custom Response Headers**
+This:
+```php
+// app/Http/routes.php
+
+Route::get('/', function()
+{
+	$data = [
+		['id' => 1, 'name' => 'John Doe', 'email' => 'john@doe.com'],
+		['id' => 2, 'name' => 'Jane Doe', 'email' => 'jane@doe.com']
+	];
+
+	$headers = [
+		'Header-1' => 'Header-1 Data',
+		'Header-2' => 'Header-2 Data'
+	];
+
+	return Larapi::respondOk($data, $headers);
+});
+```
+will return:
+```json
+{
+	"code":200,
+	"status":"OK",
+	"message":"success",
+	"response": [
+		{
+			"id":1,
+			"name":"John Doe",
+			"email":"john@doe.com"
+		},
+		{
+			"id":2,
+			"name":"Jane Doe",
+			"email":"jane@doe.com"
+		}
+	]
+}
+```
+with these headers:
+```text
+HTTP/1.1 200 OK
+Content-Type: application/json
+Header-1: Header-1 Data
+Header-2: Header-2 Data
+```
+
 ###Error Responses###
 
 Available responses:
@@ -107,6 +161,7 @@ Larapi::respondNotAvailable(); 		// 503 HTTP Response
 
 
 **Example: Return HTTP Bad Request**
+This:
 ```php
 // app/Http/routes.php
 
@@ -115,8 +170,7 @@ Route::get('/', function()
 	return Larapi::respondBadRequest();
 });
 ```
-
-Will return:
+will return:
 ```json
 {
 	"code":400,
@@ -124,18 +178,26 @@ Will return:
 	"message":"error"
 }
 ```
+with these headers:
+```text
+HTTP/1.1 400 Bad Request
+Content-Type: application/json
+```
 
 **Example: Return HTTP Bad Request with Custom Application Error Message**
+This:
 ```php
 // app/Http/routes.php
 
 Route::get('/', function()
 {
-	return Larapi::respondBadRequest('Invalid email address.', 4001);
+	$errorCode = 4001;
+	$errorMessage = 'Invalid email address.';
+
+	return Larapi::respondBadRequest($errorMessage, $errorCode);
 });
 ```
-
-Will return:
+will return:
 ```json
 {
 	"code":400,
@@ -147,12 +209,52 @@ Will return:
 	}
 }
 ```
-
-###Header Responses###
-The HTTP response headers are also automatically assigned to the response. For example, calling ```Larapi::respondNotFound();``` will add the below to the response header:
-```json
-HTTP/1.1 404 Not Found
+with these headers:
+```text
+HTTP/1.1 400 Bad Request
+Content-Type: application/json
 ```
 
-# Need More?
-I have left this package rather basic, as my needs do not currenlty exceed what it currenlty provides. If there is anyone that would like to see this package extented, please let me know your ideas. Or, simply extend it yourself :)
+**Example: Return HTTP Bad Request with Custom Application Error Message**
+This:
+```php
+// app/Http/routes.php
+
+Route::get('/', function()
+{
+	$errorCode = 4001;
+	$errorMessage = 'Invalid email address.';
+
+	$headers = [
+		'Header-1' => 'Header-1 Data',
+		'Header-2' => 'Header-2 Data'
+	];
+
+	return Larapi::respondBadRequest($errorMessage, $errorCode, $headers);
+});
+```
+will return:
+```json
+{
+	"code":400,
+	"status":"Bad Request",
+	"message":"error",
+	"response":{
+		"error-code":4001,
+		"error-message":"Invalid email address."
+	}
+}
+```
+with these headers:
+```text
+HTTP/1.1 200 OK
+Content-Type: application/json
+Header-1: Header-1 Data
+Header-2: Header-2 Data
+```
+
+# License
+Larapi is licensed under the terms of the MIT License.
+
+# TODO
+- test, test, test

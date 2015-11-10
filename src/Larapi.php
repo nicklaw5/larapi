@@ -489,15 +489,15 @@ class Larapi {
     /**
      * Returns JSON Encoded HTTP Reponse
      * 
-     * @param  array $body
+     * @param  array $data
      * @param  array $headers
      * @return json
      */
-    protected function respond($body, $headers = [])
+    protected function respond($data, $headers = [])
     {
         $this->setResponseHeaders($headers);
 
-        return response()->json($body, $this->getStatusCode(), $this->getResponseHeaders());
+        return response()->json($data, $this->getStatusCode(), $this->getResponseHeaders());
     }
 
 }

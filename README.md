@@ -220,7 +220,7 @@ HTTP/1.1 400 Bad Request
 Content-Type: application/json
 ```
 
-**Example: Return HTTP Bad Request with Custom Application Error Message**
+**Example: Return HTTP Bad Request with Custom Response Headers**
 
 This:
 ```php

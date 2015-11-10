@@ -31,6 +31,7 @@ Larapi::respondAccepted();		// 202 HTTP Response
 ```
 
 **Example: Return HTTP OK**
+
 This:
 ```php
 // app/Http/routes.php
@@ -56,6 +57,7 @@ Content-Type: application/json
 ```
 
 **Example: Return HTTP OK with Response Data**
+
 This:
 ```php
 // app/Http/routes.php
@@ -98,6 +100,7 @@ Content-Type: application/json
 ```
 
 **Example: Return HTTP OK with Custom Response Headers**
+
 This:
 ```php
 // app/Http/routes.php
@@ -161,6 +164,7 @@ Larapi::respondNotAvailable(); 		// 503 HTTP Response
 
 
 **Example: Return HTTP Bad Request**
+
 This:
 ```php
 // app/Http/routes.php
@@ -185,6 +189,7 @@ Content-Type: application/json
 ```
 
 **Example: Return HTTP Bad Request with Custom Application Error Message**
+
 This:
 ```php
 // app/Http/routes.php
@@ -216,6 +221,7 @@ Content-Type: application/json
 ```
 
 **Example: Return HTTP Bad Request with Custom Application Error Message**
+
 This:
 ```php
 // app/Http/routes.php

@@ -17,6 +17,7 @@ class Larapi {
     const HTTP_NOT_ACCEPTABLE = 406;
     const HTTP_PROXY_AUTHENTICATION_REQUIRED = 407;
     const HTTP_REQUEST_TIMEOUT = 408;
+    const HTTP_CONFLICT = 409;
     const HTTP_PRECONDITION_FAILED = 412;
     const HTTP_UNPROCESSABLE_ENTITY = 422;
     const HTTP_UPGRADE_REQUIRED = 426;
@@ -49,7 +50,8 @@ class Larapi {
         405 => 'Method Not Allowed',
         406 => 'Not Acceptable',
         407 => 'Proxy Authentication Required',
-        408 => 'Request Timeout',        
+        408 => 'Request Timeout',
+        409 => 'Conflict',
         412 => 'Precondition Failed',
         422 => 'Unprocessable Entity',
         426 => 'Upgrade Required',
@@ -352,6 +354,19 @@ class Larapi {
     public function respondMethodNotAllowed($msg = '', $errorCode = null, $headers = [])
     {
         return $this->getErrorResponse($msg, $errorCode, self::HTTP_METHOD_NOT_ALLOWED, $headers);        
+    }
+
+    /**
+     * Returns 409 Conflict Response
+     *
+     * @param string $msg
+     * @param int $errorCode
+     * @param array $headers
+     * @return json
+     */
+    public function respondConflict($msg = '', $errorCode = null, $headers = [])
+    {
+        return $this->getErrorResponse($msg, $errorCode, self::HTTP_CONFLICT, $headers);        
     }
 
     /**

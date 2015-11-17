@@ -157,6 +157,7 @@ Larapi::respondUnauthorized();		// 401 HTTP Response
 Larapi::respondForbidden(); 		// 403 HTTP Response
 Larapi::respondNotFound(); 			// 404 HTTP Response
 Larapi::respondMethodNotAllowed(); 	// 405 HTTP Response
+Larapi::respondConflict(); 			// 409 HTTP Response
 Larapi::respondInternalError();		// 500 HTTP Response
 Larapi::respondNotImplemented(); 	// 501 HTTP Response
 Larapi::respondNotAvailable(); 		// 503 HTTP Response

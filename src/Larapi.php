@@ -494,8 +494,8 @@ class Larapi {
                 'status'    => $this->getStatusText(),
                 'message'   => $this->getStatusMessage(),
                 'response'  => [
-                    'error-code'    => $this->getErrorCode(),
-                    'error-message' => $this->getErrorMessage()
+                    'errorCode'    => $this->getErrorCode(),
+                    'errorMessage' => $this->getErrorMessage()
                 ]
             ], $headers);
         }

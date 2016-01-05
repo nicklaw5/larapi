@@ -8,7 +8,7 @@ To install the package, simply add the following to your Laravel installation's 
 ```json
 "require": {
 	"laravel/framework": "5.*",
-	"nicklaw5/larapi": "1.2.*"
+	"nicklaw5/larapi": "2.0.*"
 },
 ```
 

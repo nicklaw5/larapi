@@ -210,8 +210,8 @@ will return:
 	"status":"Bad Request",
 	"message":"error",
 	"response":{
-		"error-code":4001,
-		"error-message":"Invalid email address."
+		"errorCode":4001,
+		"errorMessage":"Invalid email address."
 	}
 }
 ```
@@ -247,7 +247,7 @@ will return:
 	"status":"Bad Request",
 	"message":"error",
 	"response":{
-		"error-code":4001,
+		"errorCode":4001,
 		"error-message":"Invalid email address."
 	}
 }

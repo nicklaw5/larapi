@@ -248,7 +248,7 @@ will return:
 	"message":"error",
 	"response":{
 		"errorCode":4001,
-		"error-message":"Invalid email address."
+		"errorMessage":"Invalid email address."
 	}
 }
 ```

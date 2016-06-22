@@ -161,13 +161,13 @@ class Larapi {
      * @return self
      */
     public function setStatusMessage($msg)
-    {	
+    {   
         $msg = (string) trim($msg);
 
-    	if($msg === '')
-    		$this->statusMessage = $this->getStatusMessage();
-    	else
-    		$this->statusMessage = $msg;
+        if($msg === '')
+            $this->statusMessage = $this->getStatusMessage();
+        else
+            $this->statusMessage = $msg;
         
         return $this;
     }
@@ -190,9 +190,14 @@ class Larapi {
      */
     public function setErrorMessage($msg)
     {
-        $msg = (string) trim($msg);
-        $this->errorMessage = ($msg === '')? self::UNKNOWN_ERROR: $msg;
+        if(is_string($msg))
+        {
+            $msg = trim($msg);
+            $this->errorMessage = ($msg === '')? self::UNKNOWN_ERROR: $msg;
+            return $this;
+        }
 
+        $this->errorMessage = (empty($msg))? self::UNKNOWN_ERROR: $msg;
         return $this;
     }
 

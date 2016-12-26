@@ -182,6 +182,19 @@ class Larapi
     }
 
     /**
+     * Returns 422 Unprocessable Entity
+     *
+     * @param string $msg
+     * @param int $errorCode
+     * @param array $headers
+     * @return json
+     */
+    public function unprocessableEntity($msg = '', $errorCode = null, $headers = [])
+    {
+        return $this->getErrorResponse($msg, $errorCode, self::HTTP_UNPROCESSABLE_ENTITY, $headers);
+    }
+
+    /**
      * Returns 500 Internal Server HTTP Response
      *
      * @param string $msg

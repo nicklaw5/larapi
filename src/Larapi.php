@@ -104,6 +104,18 @@ class Larapi
     }
 
     /**
+     * Returns 204 No Content
+     *
+     * @param  array $data
+     * @param  string $msg
+     * @param array $headers
+     * @return Response
+     */
+    public function noContent($data = [], $headers = [])
+    {
+        return $this->getSuccessResponse($data, self::HTTP_NO_CONTENT, $headers);
+    }
+
      * Returns 400 Bad Request Response
      * 
      * @param  string $msg

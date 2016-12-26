@@ -14,22 +14,14 @@ class Larapi
     const HTTP_NO_CONTENT = 204;
     const HTTP_BAD_REQUEST = 400;
     const HTTP_UNAUTHORIZED = 401;
-    const HTTP_PAYMENT_REQUIRED = 402;
     const HTTP_FORBIDDEN = 403;
     const HTTP_NOT_FOUND = 404;
     const HTTP_METHOD_NOT_ALLOWED = 405;
-    const HTTP_NOT_ACCEPTABLE = 406;
-    const HTTP_PROXY_AUTHENTICATION_REQUIRED = 407;
-    const HTTP_REQUEST_TIMEOUT = 408;
     const HTTP_CONFLICT = 409;
-    const HTTP_PRECONDITION_FAILED = 412;
     const HTTP_UNPROCESSABLE_ENTITY = 422;
-    const HTTP_UPGRADE_REQUIRED = 426;
-    const HTTP_PRECONDITION_REQUIRED = 428;
     const HTTP_INTERNAL_SERVER_ERROR = 500;
     const HTTP_NOT_IMPLEMENTED = 501;
     const HTTP_SERVICE_UNAVAILABLE = 503;
-    const HTTP_INSUFFICIENT_STORAGE = 507;
 
     // OTHER CONSTANTS
     const ERROR_TEXT = 'error';
@@ -45,25 +37,16 @@ class Larapi
         200 => 'OK',
         201 => 'Created',
         202 => 'Accepted',
-        204 => 'No Content',     
         400 => 'Bad Request',
         401 => 'Unauthorized',
-        402 => 'Payment Required',
         403 => 'Forbidden',
         404 => 'Not Found',
         405 => 'Method Not Allowed',
-        406 => 'Not Acceptable',
-        407 => 'Proxy Authentication Required',
-        408 => 'Request Timeout',
         409 => 'Conflict',
-        412 => 'Precondition Failed',
         422 => 'Unprocessable Entity',
-        426 => 'Upgrade Required',
-        428 => 'Precondition Required',
         500 => 'Internal Server Error',
         501 => 'Not Implemented',
         503 => 'Service Unavailable',
-        507 => 'Insufficient Storage',
     ];
 
     /**

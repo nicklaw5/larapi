@@ -266,7 +266,7 @@ class Larapi {
      * @param array $headers
      * @return json
      */
-    public function respondOk($data = [], $headers = [])
+    public function ok($data = [], $headers = [])
     {
         return $this->getSuccessResponse($data, self::HTTP_OK, $headers);
     }
@@ -278,7 +278,7 @@ class Larapi {
      * @param array $headers
      * @return json
      */
-    public function respondCreated($data = [], $headers = [])
+    public function created($data = [], $headers = [])
     {
         return $this->getSuccessResponse($data, self::HTTP_CREATED, $headers);
     }
@@ -291,7 +291,7 @@ class Larapi {
      * @param array $headers
      * @return Response
      */
-    public function respondAccepted($data = [], $headers = [])
+    public function accepted($data = [], $headers = [])
     {
         return $this->getSuccessResponse($data, self::HTTP_ACCEPTED, $headers);
     }
@@ -304,7 +304,7 @@ class Larapi {
      * @param array $headers
      * @return json
      */
-    public function respondBadRequest($msg = '', $errorCode = null, $headers = [])
+    public function badRequest($msg = '', $errorCode = null, $headers = [])
     {
         return $this->getErrorResponse($msg, $errorCode, self::HTTP_BAD_REQUEST, $headers);
     }
@@ -317,7 +317,7 @@ class Larapi {
      * @param array $headers
      * @return json
      */
-    public function respondUnauthorized($msg = '', $errorCode = null, $headers = [])
+    public function unauthorized($msg = '', $errorCode = null, $headers = [])
     {
         return $this->getErrorResponse($msg, $errorCode, self::HTTP_UNAUTHORIZED, $headers);
     }
@@ -330,7 +330,7 @@ class Larapi {
      * @param array $headers
      * @return json
      */
-    public function respondForbidden($msg = '', $errorCode = null, $headers = [])
+    public function forbidden($msg = '', $errorCode = null, $headers = [])
     {
         return $this->getErrorResponse($msg, $errorCode, self::HTTP_FORBIDDEN, $headers);
     }
@@ -343,7 +343,7 @@ class Larapi {
      * @param array $headers
      * @return json
      */
-    public function respondNotFound($msg = '', $errorCode = null, $headers = [])
+    public function notFound($msg = '', $errorCode = null, $headers = [])
     {
         return $this->getErrorResponse($msg, $errorCode, self::HTTP_NOT_FOUND, $headers);
     }
@@ -356,7 +356,7 @@ class Larapi {
      * @param array $headers
      * @return json
      */
-    public function respondMethodNotAllowed($msg = '', $errorCode = null, $headers = [])
+    public function methodNotAllowed($msg = '', $errorCode = null, $headers = [])
     {
         return $this->getErrorResponse($msg, $errorCode, self::HTTP_METHOD_NOT_ALLOWED, $headers);        
     }
@@ -369,7 +369,7 @@ class Larapi {
      * @param array $headers
      * @return json
      */
-    public function respondConflict($msg = '', $errorCode = null, $headers = [])
+    public function conflict($msg = '', $errorCode = null, $headers = [])
     {
         return $this->getErrorResponse($msg, $errorCode, self::HTTP_CONFLICT, $headers);        
     }
@@ -382,7 +382,7 @@ class Larapi {
      * @param array $headers
      * @return json
      */
-    public function respondInternalError($msg = '', $errorCode = null, $headers = [])
+    public function internalError($msg = '', $errorCode = null, $headers = [])
     {
         return $this->getErrorResponse($msg, $errorCode, self::HTTP_INTERNAL_SERVER_ERROR, $headers);
     }
@@ -395,7 +395,7 @@ class Larapi {
      * @param array $headers
      * @return json
      */
-    public function respondNotImplemented($msg = '', $errorCode = null, $headers = [])
+    public function notImplemented($msg = '', $errorCode = null, $headers = [])
     {
         return $this->getErrorResponse($msg, $errorCode, self::HTTP_NOT_IMPLEMENTED, $headers);
     }
@@ -408,7 +408,7 @@ class Larapi {
      * @param array $headers
      * @return json
      */
-    public function respondNotAvailable($msg = '', $errorCode = null, $headers = [])
+    public function notAvailable($msg = '', $errorCode = null, $headers = [])
     {
         return $this->getErrorResponse($msg, $errorCode, self::HTTP_SERVICE_UNAVAILABLE, $headers);
     }

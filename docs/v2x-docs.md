@@ -2,17 +2,17 @@ Larapi
 ======
 A simple Laravel 5 package for handling common HTTP API responses in JSON form.
 
-## Docs
-You can find [v2.x docs here](docs/v2x-docs.md). For the lastest (v3.x) docs see below.
+# Installation
+To install the package, simply add the following to your Laravel installation's `composer.json` file:
 
-## Installation
-Pull in Larapi via composer:
-
-```bash
-$ composer require nicklaw5/larapi
+```json
+"require": {
+	"laravel/framework": "5.*",
+	"nicklaw5/larapi": "2.0.*"
+},
 ```
 
-Then, add the following **Service Provider** to your `providers` array in your `config/app.php` file:
+Run `composer update` to pull in the files. Then, add the following **Service Provider** to your `providers` array in your `config/app.php` file:
 
 ```php
 'providers' => array(
@@ -21,14 +21,13 @@ Then, add the following **Service Provider** to your `providers` array in your `
 );
 ```
 
-## Usage
+# Usage
 ###Succes Responses###
 Available responses:
 ```php
-Larapi::ok();           // 200 HTTP Response
-Larapi::created();      // 201 HTTP Response
-Larapi::accepted();     // 202 HTTP Response
-Larapi::noContent();    // 204 HTTP Response
+Larapi::respondOk();			// 200 HTTP Response
+Larapi::respondCreated();		// 201 HTTP Response
+Larapi::respondAccepted();		// 202 HTTP Response
 ```
 
 **Example: Return HTTP OK**
@@ -39,14 +38,16 @@ This:
 
 Route::get('/', function()
 {
-	return Larapi::ok();
+	return Larapi::respondOk();
 });
 ```
 
 will return:
 ```json
 {
-	"success": true
+	"code":200,
+	"status":"OK",
+	"message":"success"
 }
 ```
 with these headers:
@@ -68,24 +69,26 @@ Route::get('/', function()
 		['id' => 2, 'name' => 'Jane Doe', 'email' => 'jane@doe.com']
 	];
 
-	return Larapi::ok($data);
+	return Larapi::respondOk($data);
 });
 ```
 
 will return:
 ```json
 {
-	"success": true,
+	"code":200,
+	"status":"OK",
+	"message":"success",
 	"response": [
 		{
-			"id": 1,
-			"name": "John Doe",
-			"email": "john@doe.com"
+			"id":1,
+			"name":"John Doe",
+			"email":"john@doe.com"
 		},
 		{
-			"id": 2,
-			"name": "Jane Doe",
-			"email": "jane@doe.com"
+			"id":2,
+			"name":"Jane Doe",
+			"email":"jane@doe.com"
 		}
 	]
 }
@@ -114,23 +117,25 @@ Route::get('/', function()
 		'Header-2' => 'Header-2 Data'
 	];
 
-	return Larapi::ok($data, $headers);
+	return Larapi::respondOk($data, $headers);
 });
 ```
 will return:
 ```json
 {
-	"success": true,
+	"code":200,
+	"status":"OK",
+	"message":"success",
 	"response": [
 		{
-			"id": 1,
-			"name": "John Doe",
-			"email": "john@doe.com"
+			"id":1,
+			"name":"John Doe",
+			"email":"john@doe.com"
 		},
 		{
-			"id": 2,
-			"name": "Jane Doe",
-			"email": "jane@doe.com"
+			"id":2,
+			"name":"Jane Doe",
+			"email":"jane@doe.com"
 		}
 	]
 }
@@ -147,16 +152,15 @@ Header-2: Header-2 Data
 
 Available responses:
 ```php
-Larapi::badRequest();           // 400 HTTP Response
-Larapi::unauthorized();         // 401 HTTP Response
-Larapi::forbidden();            // 403 HTTP Response
-Larapi::notFound();             // 404 HTTP Response
-Larapi::methodNotAllowed();     // 405 HTTP Response
-Larapi::conflict();             // 409 HTTP Response
-Larapi::unprocessableEntity();  // 422 HTTP Response
-Larapi::internalError();		// 500 HTTP Response
-Larapi::notImplemented();       // 501 HTTP Response
-Larapi::notAvailable();         // 503 HTTP Response
+Larapi::respondBadRequest();		// 400 HTTP Response
+Larapi::respondUnauthorized();		// 401 HTTP Response
+Larapi::respondForbidden(); 		// 403 HTTP Response
+Larapi::respondNotFound(); 			// 404 HTTP Response
+Larapi::respondMethodNotAllowed(); 	// 405 HTTP Response
+Larapi::respondConflict(); 			// 409 HTTP Response
+Larapi::respondInternalError();		// 500 HTTP Response
+Larapi::respondNotImplemented(); 	// 501 HTTP Response
+Larapi::respondNotAvailable(); 		// 503 HTTP Response
 ```
 
 
@@ -168,13 +172,15 @@ This:
 
 Route::get('/', function()
 {
-	return Larapi::badRequest();
+	return Larapi::respondBadRequest();
 });
 ```
 will return:
 ```json
 {
-	"success": false
+	"code":400,
+	"status":"Bad Request",
+	"message":"error"
 }
 ```
 with these headers:
@@ -194,15 +200,19 @@ Route::get('/', function()
 	$errorCode = 4001;
 	$errorMessage = 'Invalid email address.';
 
-	return Larapi::badRequest($errorMessage, $errorCode);
+	return Larapi::respondBadRequest($errorMessage, $errorCode);
 });
 ```
 will return:
 ```json
 {
-	"success": false,
-	"error_code": 4001,
-	"error": "Invalid email address."
+	"code":400,
+	"status":"Bad Request",
+	"message":"error",
+	"response":{
+		"errorCode":4001,
+		"errorMessage":"Invalid email address."
+	}
 }
 ```
 with these headers:
@@ -211,7 +221,7 @@ HTTP/1.1 400 Bad Request
 Content-Type: application/json
 ```
 
-**Example: Return HTTP Bad Request with An Array of Errors and Custom Response Headers**
+**Example: Return HTTP Bad Request with Custom Response Headers**
 
 This:
 ```php
@@ -220,26 +230,25 @@ This:
 Route::get('/', function()
 {
 	$errorCode = 4001;
-	$errors = [
-		'email' => 'Invalid email address',
-		'password' => 'Not enough characters',
-	];
+	$errorMessage = 'Invalid email address.';
 
 	$headers = [
 		'Header-1' => 'Header-1 Data',
 		'Header-2' => 'Header-2 Data'
 	];
 
-	return Larapi::badRequest($errors, null, $headers);
+	return Larapi::respondBadRequest($errorMessage, $errorCode, $headers);
 });
 ```
 will return:
 ```json
 {
-	"success": false,
-	"errors": {
-		"email": "Invalid email address",
-		"password": "Not enough characters"
+	"code":400,
+	"status":"Bad Request",
+	"message":"error",
+	"response":{
+		"errorCode":4001,
+		"errorMessage":"Invalid email address."
 	}
 }
 ```
@@ -250,9 +259,3 @@ Content-Type: application/json
 Header-1: Header-1 Data
 Header-2: Header-2 Data
 ```
-
-## License
-Larapi is licensed under the terms of the [MIT License](LICENSE).
-
-## TODO
-- test, test, test

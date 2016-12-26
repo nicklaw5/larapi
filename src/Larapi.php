@@ -26,7 +26,6 @@ class Larapi
     // OTHER CONSTANTS
     const ERROR_TEXT = 'error';
     const SUCCESS_TEXT = 'success';
-    const UNKNOWN_ERROR = 'An unknown error occured';
 
     /**
      * Status codes translation table.

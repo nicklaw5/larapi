@@ -36,6 +36,7 @@ class Larapi
         200 => 'OK',
         201 => 'Created',
         202 => 'Accepted',
+        204 => 'No Content',
         400 => 'Bad Request',
         401 => 'Unauthorized',
         403 => 'Forbidden',
@@ -50,8 +51,8 @@ class Larapi
 
     /**
      * Returns 200 OK Response
-     * 
-     * @param  array $data
+     *
+     * @param array $data
      * @param array $headers
      * @return json
      */
@@ -62,8 +63,8 @@ class Larapi
 
     /**
      * Returns 201 Created Response
-     * 
-     * @param  array $data
+     *
+     * @param array $data
      * @param array $headers
      * @return json
      */
@@ -74,9 +75,9 @@ class Larapi
 
     /**
      * Returns 202 Accepted Response
-     * 
-     * @param  array $data
-     * @param  string $msg
+     *
+     * @param array $data
+     * @param string $msg
      * @param array $headers
      * @return Response
      */
@@ -88,8 +89,8 @@ class Larapi
     /**
      * Returns 204 No Content
      *
-     * @param  array $data
-     * @param  string $msg
+     * @param array $data
+     * @param string $msg
      * @param array $headers
      * @return Response
      */
@@ -98,10 +99,11 @@ class Larapi
         return $this->getSuccessResponse($data, self::HTTP_NO_CONTENT, $headers);
     }
 
+    /**
      * Returns 400 Bad Request Response
-     * 
-     * @param  string $msg
-     * @param  int $errorCode
+     *
+     * @param string $msg
+     * @param int $errorCode
      * @param array $headers
      * @return json
      */
@@ -112,9 +114,9 @@ class Larapi
 
     /**
      * Returns 401 Unauthorized Response
-     * 
-     * @param  string $msg
-     * @param  int $errorCode
+     *
+     * @param string $msg
+     * @param int $errorCode
      * @param array $headers
      * @return json
      */
@@ -125,7 +127,7 @@ class Larapi
 
     /**
      * Returns 403 Forbidden Response
-     * 
+     *
      * @param string $msg
      * @param int $errorCode
      * @param array $headers
@@ -159,7 +161,7 @@ class Larapi
      */
     public function methodNotAllowed($msg = '', $errorCode = null, $headers = [])
     {
-        return $this->getErrorResponse($msg, $errorCode, self::HTTP_METHOD_NOT_ALLOWED, $headers);        
+        return $this->getErrorResponse($msg, $errorCode, self::HTTP_METHOD_NOT_ALLOWED, $headers);
     }
 
     /**
@@ -172,7 +174,7 @@ class Larapi
      */
     public function conflict($msg = '', $errorCode = null, $headers = [])
     {
-        return $this->getErrorResponse($msg, $errorCode, self::HTTP_CONFLICT, $headers);        
+        return $this->getErrorResponse($msg, $errorCode, self::HTTP_CONFLICT, $headers);
     }
 
     /**
@@ -226,4 +228,4 @@ class Larapi
     {
         return $this->getErrorResponse($msg, $errorCode, self::HTTP_SERVICE_UNAVAILABLE, $headers);
     }
-
+}

@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace Larapi;
 
@@ -30,9 +30,10 @@ class LarapiServiceProvider extends ServiceProvider {
 	 */
 	public function register()
 	{
-		$this->app['larapi'] = $this->app->share(function($app){
-			return new Larapi;
+		$this->app->bind('larapi', function ($app) {
+		    return new Larapi;
 		});
+
 		$this->app->booting(function(){
 			$loader = \Illuminate\Foundation\AliasLoader::getInstance();
 			$loader->alias('Larapi', 'Larapi\Facades\Larapi');
